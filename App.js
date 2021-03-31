@@ -1,16 +1,56 @@
-import {StatusBar} from 'expo-status-bar';
-import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, Text, View, ScrollView, Button, TextInput} from 'react-native';
 
 export default function App() {
+
+    const [name, setName] = useState('Pop')
+    const [person, setPerson] = useState({name: 'Sam', age: 40})
+    const OnPressHandle = () => {
+        setName('Kookai')
+        setPerson({name: 'Kapoo', age: 10})
+    }
+    const [member, setMember] = useState([
+        {name: 'Kook', key: 1},
+        {name: 'Sam', key: 2},
+        {name: 'Nok', key: 3},
+        {name: 'Cha', key: 4},
+        {name: 'Tay', key: 5},
+    ])
     return (
-        <View style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.boldText}>Best Burger</Text>
+        <View>
+            <Text style={styles.header}>React Native Demo</Text>
+            <View style={styles.container}>
+                <Text>My name is {name}</Text>
+                <Text>Other names are {person.name} and age {person.age} years old</Text>
+                <View style={styles.button}>
+                    <Button
+                        title={'Update'}
+                        onPress={OnPressHandle}
+                    />
+                </View>
+                <View style={styles.inputContainer}>
+                    <Text>Enter name</Text>
+                    <TextInput
+                        style={styles.inputText}
+                        placeholder={'e.g. Marry'}
+                        onChangeText={(e) => setPerson({...person, name: e})}
+                    />
+                    <Text>Enter age</Text>
+                    <TextInput
+                        keyboardType='numeric'
+                        style={styles.inputText}
+                        placeholder={'e.g. 29'}
+                        onChangeText={(e) => setPerson({...person, age: e})}
+                    />
+                </View>
+                <ScrollView>
+                    {member.map(el =>
+                        <View key={el.key}>
+                            <Text style={styles.scrollContainer}>{el.name}</Text>
+                        </View>
+                    )}
+                </ScrollView>
             </View>
-          <View style={styles.header}>
-            <Text style={styles.boldText}>burger</Text>
-          </View>
         </View>
     );
 }
@@ -18,15 +58,55 @@ export default function App() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
         justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff',
     },
     header: {
+        textAlign: 'center',
+        width: '100%',
         backgroundColor: 'pink',
         padding: 20,
-    },
-    boldText: {
         fontWeight: 'bold',
+        marginBottom: 20,
+    },
+    content: {
+        textAlign: 'center',
+        width: '100%',
+        backgroundColor: 'salmon',
+        padding: 20,
+    },
+    inputContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        backgroundColor: 'salmon',
+        padding: 20,
+    },
+
+    button: {
+        margin: 50,
+        width: 150,
+        textAlign: 'center',
+    },
+    inputText: {
+        backgroundColor: 'grey',
+        paddingHorizontal: 15,
+        borderRadius: 50,
+        height: 30,
+        margin: 5,
+        width: 200,
+        color: 'white',
+        placeholderTextColor: 'pink',
+    },
+    scrollContainer: {
+        backgroundColor: 'purple',
+        padding: 10,
+        margin: 20,
+        color: 'white',
+        width: 200,
+        height: 50,
+        textAlign: 'center',
     }
+
 });

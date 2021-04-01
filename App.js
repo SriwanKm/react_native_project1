@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, ScrollView, Button, TextInput} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Button, TextInput, FlatList} from 'react-native';
 
 export default function App() {
 
@@ -10,11 +10,11 @@ export default function App() {
         setPerson({name: 'Kapoo', age: 10})
     }
     const [member, setMember] = useState([
-        {name: 'Kook', key: 1},
-        {name: 'Sam', key: 2},
-        {name: 'Nok', key: 3},
-        {name: 'Cha', key: 4},
-        {name: 'Tay', key: 5},
+        {name: 'Kook', id: 1},
+        {name: 'Sam', id: 2},
+        {name: 'Nok', id: 3},
+        {name: 'Cha', id: 4},
+        {name: 'Tay', id: 5},
     ])
     return (
         <View>
@@ -43,13 +43,22 @@ export default function App() {
                         onChangeText={(e) => setPerson({...person, age: e})}
                     />
                 </View>
-                <ScrollView>
-                    {member.map(el =>
-                        <View key={el.key}>
-                            <Text style={styles.scrollContainer}>{el.name}</Text>
-                        </View>
+                <FlatList
+                    numColumns={2}
+                    keyExtractor={(item) => item.id}
+                    data={member}
+                    renderItem={({item}) => (
+                        <Text style={styles.scrollContainer}>{item.name}</Text>
                     )}
-                </ScrollView>
+                />
+
+                {/*<ScrollView>*/}
+                {/*    {member.map(el =>*/}
+                {/*        <View key={el.key}>*/}
+                {/*            <Text style={styles.scrollContainer}>{el.name}</Text>*/}
+                {/*        </View>*/}
+                {/*    )}*/}
+                {/*</ScrollView>*/}
             </View>
         </View>
     );

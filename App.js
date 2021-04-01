@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, ScrollView, Button, TextInput, FlatList} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Button, TextInput, FlatList, TouchableOpacity} from 'react-native';
 
 export default function App() {
 
@@ -16,6 +16,12 @@ export default function App() {
         {name: 'Cha', id: 4},
         {name: 'Tay', id: 5},
     ])
+
+    const PressHandler = (id) => {
+        setMember((prevMember) => {
+            return prevMember.filter(member => member.id !== id)
+        })
+    }
     return (
         <View>
             <Text style={styles.header}>React Native Demo</Text>
@@ -48,7 +54,9 @@ export default function App() {
                     keyExtractor={(item) => item.id}
                     data={member}
                     renderItem={({item}) => (
-                        <Text style={styles.scrollContainer}>{item.name}</Text>
+                        <TouchableOpacity onPress={() => PressHandler(item.id)}>
+                            <Text style={styles.scrollContainer}>{item.name}</Text>
+                        </TouchableOpacity>
                     )}
                 />
 
